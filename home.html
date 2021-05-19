@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="Description" content="Enter your description here" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.css"
+    />
+    <title>WEATHER APP</title>
+    <style>
+      .sun {
+        margin-left: 50px;
+      }
+      .loca {
+        margin-left: 35px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sun mb-2" id="cloud"></div>
+      <div class="location">
+        <div class="loca">
+          <i class="fas fa-male mb-1" style="font-size: 25px"
+            >{%location%},{%country%}</i
+          >
+        </div>
+        <div id="date"></div>
+      </div>
+      <div id="weather">
+        <div id="temp"><h3 class="display-4">{%tempmain%}&deg;C</h3></div>
+        <div class="d-flex">
+          <div id="min" class="mr-5">{%tempmin%}&deg;C</div>
+          <div id="max">{%tempmax%}&deg;C</div>
+        </div>
+      </div>
+    </div>
+    <!-- weather script for geting wed js -->
+    <script>
+      const cloud = "{%tempstatus%}";
+      //all functions
+      const date = document.querySelector("#date");
+      const weather = document.querySelector("#cloud");
+      if (cloud == "Sunny") {
+        weather.innerHTML =
+          '  <i class="fas fa-sun" style="font-size: 55px; color: yellow"></i>';
+      } else if (cloud == "Clouds") {
+        weather.innerHTML =
+          '  <i class="fas fa-cloud" style="font-size: 55px; color: #dfe4ea"></i>';
+      } else if (cloud == "Rainy") {
+        weather.innerHTML =
+          '  <i class="fas fa-cloud-rain" style="font-size: 55px; color: #dfe4ea"></i>';
+      } else if (cloud == "Haze") {
+        weather,
+          (innerHTML =
+            '<i class="fas fa-smog" style="font-size: 55px; color: #dfe4ea"></i>');
+      } else {
+        weather.innerHTML =
+          '  <i class="fas fa-cloud" style="font-size: 55px; color: #dfe4ea"></i>';
+      }
+
+      const getCurrentday = () => {
+        let currentime = new Date();
+        let week = ["SUN", "MON", "TUS", "WED", "THU", "FRI", "SAT"];
+        let weekday = week[currentime.getDay()];
+        // console.log(weekday);
+        return weekday;
+      };
+      const getCurrentime = () => {
+        let allmonth = [
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
+          "MAY",
+          "JUNE",
+          "JULY",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC",
+        ];
+        let curtime = new Date();
+        let month = curtime.getMonth();
+        // console.log(month);
+        let day = curtime.getDate();
+        let year = curtime.getFullYear();
+        let currmonth = allmonth[month];
+        // console.log(day + " " + currmonth);
+        //for hours and min
+        let hours = curtime.getHours();
+        let mins = curtime.getMinutes();
+        let temp = "AM";
+        if (hours > 11) {
+          temp = "PM";
+          if (hours > 12) hours -= 12;
+        }
+        if (mins < 10) {
+          mins = "0" + mins;
+        }
+
+        return `${day} ${currmonth} | ${hours}:${mins}`;
+      };
+      console.log(getCurrentday());
+      console.log(getCurrentime());
+      date.innerHTML = `${getCurrentday()} | ${getCurrentime()}`;
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+  </body>
+</html>
